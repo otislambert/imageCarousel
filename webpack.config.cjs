@@ -1,0 +1,37 @@
+const HTMLWebpackPlugin = require("html-webpack-plugin");
+const path = require("path");
+
+module.exports = {
+  entry: {
+    index: "./src/index.js",
+  },
+  output: {
+    filename: "[name].bundle.js",
+    path: path.resolve(__dirname, "dist"),
+    publicPath: "",
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.png$/i,
+        type: "asset/resource",
+      },
+    ],
+  },
+  mode: "development",
+  devtool: "inline-source-map",
+  devServer: {
+    static: "./dist",
+    port: 8000,
+  },
+  plugins: [
+    new HTMLWebpackPlugin({
+      title: "image carousel",
+      filename: "index.html",
+    }),
+  ],
+};
