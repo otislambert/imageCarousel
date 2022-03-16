@@ -11,16 +11,23 @@
 #carousel {
   height: 100vh;
   width: 100vw;
+  flex-direction: row;
+}
+
+#carouselCenter {
+  display: flex;
   flex-direction: column;
+  gap: 10px;
+  align-items: center;
 }
 
 #imageContainer {
   border: 2px solid lightblue;
   border-radius: 10px;
   padding: 20px;
-  max-width: 80vw;
-  max-height: 80vh;
-	display: flex;
+  width: 750px;
+  height: 550px;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -49,4 +56,9 @@
 
 #imgCarousel img.hidden {
   visibility: hidden;
+}
+
+.navArrow {
+  width: 100px;
+  height: 100px;
 }

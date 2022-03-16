@@ -6,8 +6,8 @@ import riverPhoto from "./images/river.jpg";
 import rockWavesPhoto from "./images/rockwaves.jpg";
 import waterfallPhoto from "./images/waterfalls.jpg";
 
-let playing = true;
-let count = 0;
+import leftArrow from "./icons/left-arrow.png";
+import rightArrow from "./icons/right-arrow.png";
 
 const body = document.querySelector("body");
 
@@ -17,18 +17,45 @@ const createHTMLbody = (() => {
   main.classList.add("centerContents");
   body.appendChild(main);
 
-  const imgCar = document.createElement("div");
-  imgCar.setAttribute("id", "imageContainer");
-  main.appendChild(imgCar);
+  const backArrow = new Image();
+  backArrow.src = leftArrow;
+  backArrow.setAttribute("id", "backArrow");
+  backArrow.classList.add("navArrow");
+  main.appendChild(backArrow);
+
+  const carouselCenter = document.createElement("div");
+  carouselCenter.setAttribute("id", "carouselCenter");
+  main.appendChild(carouselCenter);
+
+  const imageContainer = document.createElement("div");
+  imageContainer.setAttribute("id", "imageContainer");
+  carouselCenter.appendChild(imageContainer);
 
   const selectors = document.createElement("div");
   selectors.setAttribute("id", "selectorsDiv");
-  main.appendChild(selectors);
+  carouselCenter.appendChild(selectors);
+
+  const nextArrow = new Image();
+  nextArrow.src = rightArrow;
+  nextArrow.setAttribute("id", "nextArrow");
+  nextArrow.classList.add("navArrow");
+  main.appendChild(nextArrow);
+
+  const navArrows = [backArrow, nextArrow];
+
+  navArrows.forEach((arrow) => {
+    arrow.addEventListener("click", (e) => {
+      const x = e.target.id === "nextArrow" ? 1 : -1;
+      nextImage(x);
+    });
+  });
 
   return {
     main,
-    imgCar,
+    imageContainer,
     selectors,
+    backArrow,
+    nextArrow,
   };
 })();
 
@@ -154,4 +181,31 @@ function showSelectedImage(image) {
     image.style.width = natWidth + "px";
     image.style.height = natHeight + "px";
   }
+}
+
+function nextImage(x) {
+  const images = imageManagement.images;
+  const selectors = imageManagement.selectors;
+
+  const max = images.length - 1;
+  const current = parseInt(
+    Array.from(document.querySelectorAll(".imageSelector"))
+      .find((selector) => Array.from(selector.classList).includes("selected"))
+      .id.replace("selector", "")
+  );
+
+  let next = current + x;
+  next = next > max ? 0 : next;
+  next = next < 0 ? max : next;
+
+  const selectedIMG = images[next];
+  const others = images.filter((image) => image !== selectedIMG);
+
+  showSelectedImage(selectedIMG);
+  hideOtherImages(others);
+
+  selectors[next].classList.add("selected");
+
+  const otherSels = selectors.filter((ele) => ele !== selectors[next]);
+  otherSels.forEach((ele) => ele.classList.remove("selected"));
 }
