@@ -103,11 +103,6 @@ const imageManagement = (() => {
   showSelectedImage(selected);
 
   return {
-    bloodMoon,
-    ice,
-    river,
-    rockWaves,
-    waterfall,
     images,
     selectors,
   };
@@ -146,20 +141,22 @@ function showSelectedImage(image) {
   const natHeight = image.naturalHeight;
   const natWidth = image.naturalWidth;
 
-  const maxWidth =
-    Math.floor(Math.max(
+  const maxWidth = Math.floor(
+    Math.max(
       document.documentElement.clientWidth || 0,
       window.innerWidth || 0
     ) *
-    0.8 *
-    0.8);
-  const maxHeight =
-    Math.floor(Math.max(
+      0.8 *
+      0.8
+  );
+  const maxHeight = Math.floor(
+    Math.max(
       document.documentElement.clientHeight || 0,
       window.innerHeight || 0
     ) *
-    0.8 *
-    0.8)
+      0.8 *
+      0.8
+  );
 
   if (natHeight > maxHeight || natWidth > maxWidth) {
     if (natHeight > natWidth) {
@@ -209,3 +206,8 @@ function nextImage(x) {
   const otherSels = selectors.filter((ele) => ele !== selectors[next]);
   otherSels.forEach((ele) => ele.classList.remove("selected"));
 }
+
+
+setInterval(function () {
+  nextImage(1);
+}, 5000);
