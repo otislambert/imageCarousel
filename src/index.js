@@ -13,12 +13,12 @@ const body = document.querySelector("body");
 
 const createHTMLbody = (() => {
   const main = document.createElement("div");
-  main.setAttribute("id", "mainDiv");
+  main.setAttribute("id", "carousel");
   main.classList.add("centerContents");
   body.appendChild(main);
 
   const imgCar = document.createElement("div");
-  imgCar.setAttribute("id", "imgCarousel");
+  imgCar.setAttribute("id", "imageContainer");
   main.appendChild(imgCar);
 
   const selectors = document.createElement("div");
@@ -33,7 +33,7 @@ const createHTMLbody = (() => {
 })();
 
 const imageManagement = (() => {
-  const parent = document.querySelector("#imgCarousel");
+  const parent = document.querySelector("#imageContainer");
 
   const bloodMoon = new Image();
   const ice = new Image();
