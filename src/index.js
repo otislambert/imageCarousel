@@ -147,33 +147,33 @@ function showSelectedImage(image) {
   const natWidth = image.naturalWidth;
 
   const maxWidth =
-    Math.max(
+    Math.floor(Math.max(
       document.documentElement.clientWidth || 0,
       window.innerWidth || 0
     ) *
     0.8 *
-    0.8;
+    0.8);
   const maxHeight =
-    Math.max(
+    Math.floor(Math.max(
       document.documentElement.clientHeight || 0,
       window.innerHeight || 0
     ) *
     0.8 *
-    0.8;
+    0.8)
 
   if (natHeight > maxHeight || natWidth > maxWidth) {
     if (natHeight > natWidth) {
       image.style.height = maxHeight + "px";
 
-      const percentage = image.height / image.naturalHeight;
-      const setWidth = image.naturalWidth * percentage;
+      const percentage = maxHeight / natHeight;
+      const setWidth = natWidth * percentage;
 
       image.style.width = setWidth + "px";
     } else {
       image.style.width = maxWidth + "px";
 
-      const percentage = image.width / image.naturalWidth;
-      const setHeight = image.naturalHeight * percentage;
+      const percentage = maxWidth / natWidth;
+      const setHeight = natHeight * percentage;
 
       image.style.height = setHeight + "px";
     }
