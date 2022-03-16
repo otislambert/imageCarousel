@@ -93,10 +93,16 @@ function changeImagesSelector(e) {
   const others = images.filter((image) => image !== selectedIMG);
 
   hideOtherImages(others);
-
   showSelectedImage(selectedIMG);
 
-  console.log("----------------");
+  const selectors = imageManagement.selectors;
+
+  const selectedSel = e.currentTarget;
+  const otherSels = selectors.filter((ele) => ele !== selectedSel);
+
+  selectedSel.classList.add("selected");
+  otherSels.forEach((ele) => ele.classList.remove("selected"));
+
   return;
 }
 
@@ -109,7 +115,6 @@ function hideOtherImages(others) {
 
 function showSelectedImage(image) {
   image.classList.remove("hidden");
-  console.log(image);
 
   const natHeight = image.naturalHeight;
   const natWidth = image.naturalWidth;
@@ -131,27 +136,22 @@ function showSelectedImage(image) {
 
   if (natHeight > maxHeight || natWidth > maxWidth) {
     if (natHeight > natWidth) {
-      console.log('using max height');
       image.style.height = maxHeight + "px";
 
       const percentage = image.height / image.naturalHeight;
-      console.log(percentage);
       const setWidth = image.naturalWidth * percentage;
-      console.log(setWidth);
+
       image.style.width = setWidth + "px";
     } else {
-      console.log('using max width');
       image.style.width = maxWidth + "px";
 
       const percentage = image.width / image.naturalWidth;
       const setHeight = image.naturalHeight * percentage;
+
       image.style.height = setHeight + "px";
     }
   } else {
     image.style.width = natWidth + "px";
     image.style.height = natHeight + "px";
   }
-  console.log(image);
-  console.log(image.width / image.height);
-  console.log(image.naturalHeight / image.naturalWidth);
 }
