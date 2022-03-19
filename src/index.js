@@ -210,8 +210,6 @@ function nextImage(x) {
 
 function timer() {
   setInterval(function() {
-    console.timeEnd('next');
-    console.time('next');
     nextImage(1);
   }, 5000);
 }
