@@ -1,51 +1,53 @@
-import "./style.css";
+import './style.css';
 
-import bloodMoonPhoto from "./images/bloodmoon.jpg";
-import icePhoto from "./images/ice.jpg";
-import riverPhoto from "./images/river.jpg";
-import rockWavesPhoto from "./images/rockwaves.jpg";
-import waterfallPhoto from "./images/waterfalls.jpg";
+import bloodMoonPhoto from './images/bloodmoon.jpg';
+import icePhoto from './images/ice.jpg';
+import riverPhoto from './images/river.jpg';
+import rockWavesPhoto from './images/rockwaves.jpg';
+import waterfallPhoto from './images/waterfalls.jpg';
 
-import leftArrow from "./icons/left-arrow.png";
-import rightArrow from "./icons/right-arrow.png";
+import leftArrow from './icons/left-arrow.png';
+import rightArrow from './icons/right-arrow.png';
 
-const body = document.querySelector("body");
+import { loadImage, sizeImage, addToCarousel } from './imageFunctions.js';
+
+const body = document.querySelector('body');
 
 const createHTMLbody = (() => {
-  const main = document.createElement("div");
-  main.setAttribute("id", "carousel");
-  main.classList.add("centerContents");
+  const main = document.createElement('div');
+  main.setAttribute('id', 'carousel');
+  main.classList.add('centerContents');
   body.appendChild(main);
 
   const backArrow = new Image();
   backArrow.src = leftArrow;
-  backArrow.setAttribute("id", "backArrow");
-  backArrow.classList.add("navArrow");
+  backArrow.setAttribute('id', 'backArrow');
+  backArrow.classList.add('navArrow');
   main.appendChild(backArrow);
 
-  const carouselCenter = document.createElement("div");
-  carouselCenter.setAttribute("id", "carouselCenter");
+  const carouselCenter = document.createElement('div');
+  carouselCenter.setAttribute('id', 'carouselCenter');
   main.appendChild(carouselCenter);
 
-  const imageContainer = document.createElement("div");
-  imageContainer.setAttribute("id", "imageContainer");
+  const imageContainer = document.createElement('div');
+  imageContainer.setAttribute('id', 'imageContainer');
   carouselCenter.appendChild(imageContainer);
 
-  const selectors = document.createElement("div");
-  selectors.setAttribute("id", "selectorsDiv");
+  const selectors = document.createElement('div');
+  selectors.setAttribute('id', 'selectorsDiv');
   carouselCenter.appendChild(selectors);
 
   const nextArrow = new Image();
   nextArrow.src = rightArrow;
-  nextArrow.setAttribute("id", "nextArrow");
-  nextArrow.classList.add("navArrow");
+  nextArrow.setAttribute('id', 'nextArrow');
+  nextArrow.classList.add('navArrow');
   main.appendChild(nextArrow);
 
   const navArrows = [backArrow, nextArrow];
 
   navArrows.forEach((arrow) => {
-    arrow.addEventListener("click", (e) => {
-      const x = e.target.id === "nextArrow" ? 1 : -1;
+    arrow.addEventListener('click', (e) => {
+      const x = e.target.id === 'nextArrow' ? 1 : -1;
       nextImage(x);
     });
   });
@@ -59,161 +61,163 @@ const createHTMLbody = (() => {
   };
 })();
 
-const imageManagement = (() => {
-  const parent = document.querySelector("#imageContainer");
+const imageManagement = new Promise((resolve, reject) => {
+  const parent = document.querySelector('#imageContainer');
 
-  const bloodMoon = new Image();
-  const ice = new Image();
-  const river = new Image();
-  const rockWaves = new Image();
-  const waterfall = new Image();
+  const selectorDiv = createHTMLbody.selectors;
+  const imageList = [];
+  const selectorList = [];
 
-  bloodMoon.src = bloodMoonPhoto;
-  ice.src = icePhoto;
-  river.src = riverPhoto;
-  rockWaves.src = rockWavesPhoto;
-  waterfall.src = waterfallPhoto;
+  const addImages = () => {
+    return new Promise((resolve, reject) => {
+      Promise.all([
+        loadImage(bloodMoonPhoto),
+        loadImage(icePhoto),
+        loadImage(riverPhoto),
+        loadImage(rockWavesPhoto),
+        loadImage(waterfallPhoto),
+      ]).then((images) => {
+        images.forEach((image) => {
+          addToCarousel(image);
+          imageList.push(image);
 
-  parent.appendChild(bloodMoon);
-  parent.appendChild(ice);
-  parent.appendChild(river);
-  parent.appendChild(rockWaves);
-  parent.appendChild(waterfall);
-
-  const images = Array.from(parent.getElementsByTagName("img"));
-
-  for (let i = 0; i < images.length; i++) {
-    const selectorsDiv = createHTMLbody.selectors;
-
-    const selector = document.createElement("div");
-    selector.setAttribute("id", `selector${i}`);
-    selector.classList.add("imageSelector");
-    selectorsDiv.appendChild(selector);
-    selector.addEventListener("click", changeImagesSelector);
-  }
-  const selectors = Array.from(document.querySelectorAll(".imageSelector"));
-
-  let selected = images[0];
-
-  selectors[0].classList.add("selected");
-
-  let unselected = images.filter((image) => image != selected);
-
-  hideOtherImages(unselected);
-  showSelectedImage(selected);
-
-  return {
-    images,
-    selectors,
+          const createSelector = (() => {
+            const selector = document.createElement('div');
+            selector.classList.add('imageSelector');
+            selectorDiv.appendChild(selector);
+            selectorList.push(selector);
+          })();
+        });
+        if (imageList.length === 5) {
+          const res = { imageList, selectorList };
+          resolve(res);
+        } else {
+          reject(new Error('Not all Images were added'));
+        }
+      });
+    });
   };
-})();
 
-function changeImagesSelector(e) {
-  const images = imageManagement.images;
+  addImages()
+    .then((res) => {
+      if (selectorList.length === imageList.length) {
+        resolve();
+      } else {
+        console.error('not all images have selectors');
+      }
+    })
+    .catch((error) => {
+      reject(error);
+    });
+});
 
-  const selectedIMG = images[parseInt(e.target.id.replace("selector", ""))];
-  const others = images.filter((image) => image !== selectedIMG);
+const setImages = (selected) => {
+  const images = Array.from(
+    document.querySelector('#imageContainer').getElementsByTagName('img')
+  );
 
-  hideOtherImages(others);
-  showSelectedImage(selectedIMG);
-
-  const selectors = imageManagement.selectors;
-
-  const selectedSel = e.currentTarget;
-  const otherSels = selectors.filter((ele) => ele !== selectedSel);
-
-  selectedSel.classList.add("selected");
-  otherSels.forEach((ele) => ele.classList.remove("selected"));
-
-  return;
-}
-
-function hideOtherImages(others) {
-  others.forEach((image) => {
-    image.classList.add("hidden");
-    image.style.width = "0px";
+  const hidden = images.filter((image) => image !== selected);
+  hidden.forEach((image) => {
+    console.log(image);
+    image.classList.add('hidden');
   });
-}
+};
 
-function showSelectedImage(image) {
-  image.classList.remove("hidden");
+// function changeImagesSelector(e) {
+//   const images = imageManagement.images;
 
-  const natHeight = image.naturalHeight;
-  const natWidth = image.naturalWidth;
+//   const selectedIMG = images[parseInt(e.target.id.replace('selector', ''))];
+//   const others = images.filter((image) => image !== selectedIMG);
 
-  const maxWidth = Math.floor(
-    Math.max(
-      document.documentElement.clientWidth || 0,
-      window.innerWidth || 0
-    ) *
-      0.8 *
-      0.8
-  );
-  const maxHeight = Math.floor(
-    Math.max(
-      document.documentElement.clientHeight || 0,
-      window.innerHeight || 0
-    ) *
-      0.8 *
-      0.8
-  );
+//   hideOtherImages(others);
+//   showSelectedImage(selectedIMG);
 
-  if (natHeight > maxHeight || natWidth > maxWidth) {
-    if (natHeight > natWidth) {
-      image.style.height = maxHeight + "px";
+//   const selectors = imageManagement.selectors;
 
-      const percentage = maxHeight / natHeight;
-      const setWidth = natWidth * percentage;
+//   const selectedSel = e.currentTarget;
+//   const otherSels = selectors.filter((ele) => ele !== selectedSel);
 
-      image.style.width = setWidth + "px";
-    } else {
-      image.style.width = maxWidth + "px";
+//   selectedSel.classList.add('selected');
+//   otherSels.forEach((ele) => ele.classList.remove('selected'));
 
-      const percentage = maxWidth / natWidth;
-      const setHeight = natHeight * percentage;
+//   return;
+// }
 
-      image.style.height = setHeight + "px";
-    }
-  } else {
-    image.style.width = natWidth + "px";
-    image.style.height = natHeight + "px";
-  }
-}
+// function hideOtherImages(others) {
+//   others.forEach((image) => {
+//     image.classList.add('hidden');
+//     image.style.width = '0px';
+//   });
+// }
 
-function nextImage(x) {
-  const images = imageManagement.images;
-  const selectors = imageManagement.selectors;
+// function showSelectedImage(image) {
+//   image.classList.remove('hidden');
 
-  const max = images.length - 1;
-  const current = parseInt(
-    Array.from(document.querySelectorAll(".imageSelector"))
-      .find((selector) => Array.from(selector.classList).includes("selected"))
-      .id.replace("selector", "")
-  );
+//   const natHeight = image.naturalHeight;
+//   const natWidth = image.naturalWidth;
 
-  let next = current + x;
-  next = next > max ? 0 : next;
-  next = next < 0 ? max : next;
+//   const maxWidth = Math.floor(
+//     Math.max(
+//       document.documentElement.clientWidth || 0,
+//       window.innerWidth || 0
+//     ) *
+//       0.8 *
+//       0.8
+//   );
+//   const maxHeight = Math.floor(
+//     Math.max(
+//       document.documentElement.clientHeight || 0,
+//       window.innerHeight || 0
+//     ) *
+//       0.8 *
+//       0.8
+//   );
 
-  const selectedIMG = images[next];
-  const others = images.filter((image) => image !== selectedIMG);
+//   if (natHeight > maxHeight || natWidth > maxWidth) {
+//     if (natHeight > natWidth) {
+//       image.style.height = maxHeight + 'px';
 
-  showSelectedImage(selectedIMG);
-  hideOtherImages(others);
+//       const percentage = maxHeight / natHeight;
+//       const setWidth = natWidth * percentage;
 
-  selectors[next].classList.add("selected");
+//       image.style.width = setWidth + 'px';
+//     } else {
+//       image.style.width = maxWidth + 'px';
 
-  const otherSels = selectors.filter((ele) => ele !== selectors[next]);
-  otherSels.forEach((ele) => ele.classList.remove("selected"));
-}
+//       const percentage = maxWidth / natWidth;
+//       const setHeight = natHeight * percentage;
 
+//       image.style.height = setHeight + 'px';
+//     }
+//   } else {
+//     image.style.width = natWidth + 'px';
+//     image.style.height = natHeight + 'px';
+//   }
+// }
 
-function timer() {
-  setInterval(function() {
-    nextImage(1);
-  }, 5000);
-}
+// function nextImage(x) {
+//   const images = imageManagement.images;
+//   const selectors = imageManagement.selectors;
 
-window.onload = () => {
-  timer();
-}
+//   const max = images.length - 1;
+//   const current = parseInt(
+//     Array.from(document.querySelectorAll('.imageSelector'))
+//       .find((selector) => Array.from(selector.classList).includes('selected'))
+//       .id.replace('selector', '')
+//   );
+
+//   let next = current + x;
+//   next = next > max ? 0 : next;
+//   next = next < 0 ? max : next;
+
+//   const selectedIMG = images[next];
+//   const others = images.filter((image) => image !== selectedIMG);
+
+//   showSelectedImage(selectedIMG);
+//   hideOtherImages(others);
+
+//   selectors[next].classList.add('selected');
+
+//   const otherSels = selectors.filter((ele) => ele !== selectors[next]);
+//   otherSels.forEach((ele) => ele.classList.remove('selected'));
+// }

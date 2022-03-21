@@ -34,6 +34,8 @@
 
 #imageContainer img {
   transition: width 200ms;
+  visibility: visible;
+  flex: 0 0 auto;
 }
 
 #selectorsDiv {
@@ -54,8 +56,10 @@
   background-color: darkgray;
 }
 
-#imgCarousel img.hidden {
+#imageContainer img.hidden {
   visibility: hidden;
+  width: 0;
+  height: 0;
 }
 
 .navArrow {
