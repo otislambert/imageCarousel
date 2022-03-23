@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n}\n\n.centerContents {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n#carousel {\n  height: 100vh;\n  width: 100vw;\n  flex-direction: row;\n}\n\n#carouselCenter {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n  align-items: center;\n}\n\n#imageContainer {\n  border: 2px solid lightblue;\n  border-radius: 10px;\n  padding: 20px;\n  width: 750px;\n  height: 550px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n#imageContainer img {\n  transition: width 200ms;\n  visibility: visible;\n  flex: 0 0 auto;\n}\n\n#selectorsDiv {\n  display: flex;\n  flex-direction: row;\n  gap: 10px;\n}\n\n.imageSelector {\n  height: 20px;\n  width: 20px;\n  border: 1px solid black;\n  border-radius: 50%;\n  cursor: pointer;\n}\n\n.imageSelector.selected {\n  background-color: darkgray;\n}\n\n#imageContainer img.hidden {\n  visibility: hidden;\n}\n\n.navArrow {\n  width: 100px;\n  height: 100px;\n}\n", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;EACE,SAAS;AACX;;AAEA;EACE,aAAa;EACb,mBAAmB;EACnB,uBAAuB;AACzB;;AAEA;EACE,aAAa;EACb,YAAY;EACZ,mBAAmB;AACrB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,SAAS;EACT,mBAAmB;AACrB;;AAEA;EACE,2BAA2B;EAC3B,mBAAmB;EACnB,aAAa;EACb,YAAY;EACZ,aAAa;EACb,aAAa;EACb,uBAAuB;EACvB,mBAAmB;AACrB;;AAEA;EACE,uBAAuB;EACvB,mBAAmB;EACnB,cAAc;AAChB;;AAEA;EACE,aAAa;EACb,mBAAmB;EACnB,SAAS;AACX;;AAEA;EACE,YAAY;EACZ,WAAW;EACX,uBAAuB;EACvB,kBAAkB;EAClB,eAAe;AACjB;;AAEA;EACE,0BAA0B;AAC5B;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE,YAAY;EACZ,aAAa;AACf","sourcesContent":["* {\n  margin: 0;\n}\n\n.centerContents {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n#carousel {\n  height: 100vh;\n  width: 100vw;\n  flex-direction: row;\n}\n\n#carouselCenter {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n  align-items: center;\n}\n\n#imageContainer {\n  border: 2px solid lightblue;\n  border-radius: 10px;\n  padding: 20px;\n  width: 750px;\n  height: 550px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n#imageContainer img {\n  transition: width 200ms;\n  visibility: visible;\n  flex: 0 0 auto;\n}\n\n#selectorsDiv {\n  display: flex;\n  flex-direction: row;\n  gap: 10px;\n}\n\n.imageSelector {\n  height: 20px;\n  width: 20px;\n  border: 1px solid black;\n  border-radius: 50%;\n  cursor: pointer;\n}\n\n.imageSelector.selected {\n  background-color: darkgray;\n}\n\n#imageContainer img.hidden {\n  visibility: hidden;\n}\n\n.navArrow {\n  width: 100px;\n  height: 100px;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\n  margin: 0;\n}\n\n.centerContents {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n#carousel {\n  height: 100vh;\n  width: 100vw;\n  flex-direction: row;\n}\n\n#carouselCenter {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n  align-items: center;\n}\n\n#imageContainer {\n  border: 2px solid lightblue;\n  border-radius: 10px;\n  padding: 20px;\n  width: 70vw;\n  max-width: 1440px;\n  height: 70vh;\n  max-height: 880px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  overflow: hidden;\n}\n\n#imageContainer img {\n  transition: width 200ms;\n  visibility: visible;\n  flex: 0 0 auto;\n}\n\n#selectorsDiv {\n  display: flex;\n  flex-direction: row;\n  gap: 10px;\n}\n\n.imageSelector {\n  height: 20px;\n  width: 20px;\n  border: 1px solid black;\n  border-radius: 50%;\n  cursor: pointer;\n}\n\n.imageSelector.selected {\n  background-color: darkgray;\n}\n\n#imageContainer img.hidden {\n  visibility: hidden;\n}\n\n.navArrow {\n  width: 100px;\n  height: 100px;\n}\n", "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;EACE,SAAS;AACX;;AAEA;EACE,aAAa;EACb,mBAAmB;EACnB,uBAAuB;AACzB;;AAEA;EACE,aAAa;EACb,YAAY;EACZ,mBAAmB;AACrB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,SAAS;EACT,mBAAmB;AACrB;;AAEA;EACE,2BAA2B;EAC3B,mBAAmB;EACnB,aAAa;EACb,WAAW;EACX,iBAAiB;EACjB,YAAY;EACZ,iBAAiB;EACjB,aAAa;EACb,uBAAuB;EACvB,mBAAmB;EACnB,gBAAgB;AAClB;;AAEA;EACE,uBAAuB;EACvB,mBAAmB;EACnB,cAAc;AAChB;;AAEA;EACE,aAAa;EACb,mBAAmB;EACnB,SAAS;AACX;;AAEA;EACE,YAAY;EACZ,WAAW;EACX,uBAAuB;EACvB,kBAAkB;EAClB,eAAe;AACjB;;AAEA;EACE,0BAA0B;AAC5B;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE,YAAY;EACZ,aAAa;AACf","sourcesContent":["* {\n  margin: 0;\n}\n\n.centerContents {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n#carousel {\n  height: 100vh;\n  width: 100vw;\n  flex-direction: row;\n}\n\n#carouselCenter {\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n  align-items: center;\n}\n\n#imageContainer {\n  border: 2px solid lightblue;\n  border-radius: 10px;\n  padding: 20px;\n  width: 70vw;\n  max-width: 1440px;\n  height: 70vh;\n  max-height: 880px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  overflow: hidden;\n}\n\n#imageContainer img {\n  transition: width 200ms;\n  visibility: visible;\n  flex: 0 0 auto;\n}\n\n#selectorsDiv {\n  display: flex;\n  flex-direction: row;\n  gap: 10px;\n}\n\n.imageSelector {\n  height: 20px;\n  width: 20px;\n  border: 1px solid black;\n  border-radius: 50%;\n  cursor: pointer;\n}\n\n.imageSelector.selected {\n  background-color: darkgray;\n}\n\n#imageContainer img.hidden {\n  visibility: hidden;\n}\n\n.navArrow {\n  width: 100px;\n  height: 100px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -874,7 +874,7 @@ const createHTMLbody = (() => {
   };
 })();
 
-const imageManagement = new Promise((resolve, reject) => {
+const imageManagement = (() => {
   const parent = document.querySelector('#imageContainer');
 
   const selectorDiv = createHTMLbody.selectors;
@@ -918,15 +918,15 @@ const imageManagement = new Promise((resolve, reject) => {
         selectorList.forEach((selector) => {
           selector.addEventListener('click', changeImagesSelector);
         });
-        resolve();
       } else {
-        console.error('not all images have selectors');
+        const err = new Error('not all images have selectors');
+        console.log(err);
       }
     })
     .catch((error) => {
-      reject(error);
+      console.log(error);
     });
-});
+})();
 
 const setImages = (selected) => {
   (0,_imageFunctions_js__WEBPACK_IMPORTED_MODULE_8__.sizeImage)(selected).then((res) => {
@@ -956,8 +956,6 @@ const setImages = (selected) => {
     image.style.width = '0px';
     image.style.height = '0px';
   });
-
-  console.log(images);
 };
 
 function changeImagesSelector(e) {
@@ -991,6 +989,14 @@ function nextImage(x) {
 
   setImages(images[next]);
 }
+
+window.addEventListener('resize', (e) => {
+  const current = Array.from(
+    document.querySelector('#imageContainer').getElementsByTagName('img')
+  ).find((image) => !Array.from(image.classList).includes('hidden'));
+
+  setImages(current);
+});
 
 })();
 

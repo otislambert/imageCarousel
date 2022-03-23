@@ -25,11 +25,14 @@
   border: 2px solid lightblue;
   border-radius: 10px;
   padding: 20px;
-  width: 750px;
-  height: 550px;
+  width: 70vw;
+  max-width: 1440px;
+  height: 70vh;
+  max-height: 880px;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 #imageContainer img {

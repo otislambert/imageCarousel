@@ -61,7 +61,7 @@ const createHTMLbody = (() => {
   };
 })();
 
-const imageManagement = new Promise((resolve, reject) => {
+const imageManagement = (() => {
   const parent = document.querySelector('#imageContainer');
 
   const selectorDiv = createHTMLbody.selectors;
@@ -105,15 +105,15 @@ const imageManagement = new Promise((resolve, reject) => {
         selectorList.forEach((selector) => {
           selector.addEventListener('click', changeImagesSelector);
         });
-        resolve();
       } else {
-        console.error('not all images have selectors');
+        const err = new Error('not all images have selectors');
+        console.log(err);
       }
     })
     .catch((error) => {
-      reject(error);
+      console.log(error);
     });
-});
+})();
 
 const setImages = (selected) => {
   sizeImage(selected).then((res) => {
@@ -143,8 +143,6 @@ const setImages = (selected) => {
     image.style.width = '0px';
     image.style.height = '0px';
   });
-
-  console.log(images);
 };
 
 function changeImagesSelector(e) {
@@ -178,3 +176,11 @@ function nextImage(x) {
 
   setImages(images[next]);
 }
+
+window.addEventListener('resize', (e) => {
+  const current = Array.from(
+    document.querySelector('#imageContainer').getElementsByTagName('img')
+  ).find((image) => !Array.from(image.classList).includes('hidden'));
+
+  setImages(current);
+});
