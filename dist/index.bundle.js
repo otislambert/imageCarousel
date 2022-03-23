@@ -668,25 +668,15 @@ function sizeImage(image) {
     const natHeight = image.naturalHeight;
     const natWidth = image.naturalWidth;
 
+    const containerRect = document
+      .querySelector('#imageContainer')
+      .getBoundingClientRect();
+
     let height = 0;
     let width = 0;
 
-    const maxWidth = Math.floor(
-      Math.max(
-        document.documentElement.clientWidth || 0,
-        window.innerWidth || 0
-      ) *
-        0.8 *
-        0.8
-    );
-    const maxHeight = Math.floor(
-      Math.max(
-        document.documentElement.clientHeight || 0,
-        window.innerHeight || 0
-      ) *
-        0.8 *
-        0.8
-    );
+    const maxWidth = Math.floor(containerRect.width * 0.8);
+    const maxHeight = Math.floor(containerRect.height * 0.8);
 
     if (natHeight > maxHeight || natWidth > maxWidth) {
       if (natHeight > natWidth) {
