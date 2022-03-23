@@ -58,8 +58,6 @@
 
 #imageContainer img.hidden {
   visibility: hidden;
-  width: 0;
-  height: 0;
 }
 
 .navArrow {

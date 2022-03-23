@@ -77,20 +77,20 @@ const imageManagement = new Promise((resolve, reject) => {
         loadImage(rockWavesPhoto),
         loadImage(waterfallPhoto),
       ]).then((images) => {
-        images.forEach((image) => {
-          addToCarousel(image);
-          imageList.push(image);
+        for (let i = 0; i < images.length; i++) {
+          addToCarousel(images[i]);
+          imageList.push(images[i]);
 
           const createSelector = (() => {
             const selector = document.createElement('div');
+            selector.id = `selector${i}`;
             selector.classList.add('imageSelector');
             selectorDiv.appendChild(selector);
             selectorList.push(selector);
           })();
-        });
+        }
         if (imageList.length === 5) {
-          const res = { imageList, selectorList };
-          resolve(res);
+          resolve();
         } else {
           reject(new Error('Not all Images were added'));
         }
@@ -101,6 +101,10 @@ const imageManagement = new Promise((resolve, reject) => {
   addImages()
     .then((res) => {
       if (selectorList.length === imageList.length) {
+        setImages(imageList[0]);
+        selectorList.forEach((selector) => {
+          selector.addEventListener('click', changeImagesSelector);
+        });
         resolve();
       } else {
         console.error('not all images have selectors');
@@ -112,112 +116,65 @@ const imageManagement = new Promise((resolve, reject) => {
 });
 
 const setImages = (selected) => {
+  sizeImage(selected).then((res) => {
+    selected.style.height = res.height + 'px';
+    selected.style.width = res.width + 'px';
+    selected.classList.remove('hidden');
+  });
+
   const images = Array.from(
     document.querySelector('#imageContainer').getElementsByTagName('img')
   );
 
+  const selectors = Array.from(
+    document.querySelector('#selectorsDiv').getElementsByTagName('div')
+  );
+
+  const index = images.findIndex((image) => image === selected);
+
+  selectors[index].classList.add('selected');
+  selectors
+    .filter((selector) => selector !== selectors[index])
+    .forEach((selector) => selector.classList.remove('selected'));
+
   const hidden = images.filter((image) => image !== selected);
   hidden.forEach((image) => {
-    console.log(image);
     image.classList.add('hidden');
+    image.style.width = '0px';
+    image.style.height = '0px';
   });
+
+  console.log(images);
 };
 
-// function changeImagesSelector(e) {
-//   const images = imageManagement.images;
+function changeImagesSelector(e) {
+  const images = Array.from(
+    document.querySelector('#imageContainer').getElementsByTagName('img')
+  );
 
-//   const selectedIMG = images[parseInt(e.target.id.replace('selector', ''))];
-//   const others = images.filter((image) => image !== selectedIMG);
+  const selectedIMG = images[parseInt(e.target.id.replace('selector', ''))];
 
-//   hideOtherImages(others);
-//   showSelectedImage(selectedIMG);
+  setImages(selectedIMG);
+}
 
-//   const selectors = imageManagement.selectors;
+function nextImage(x) {
+  const images = Array.from(
+    document.querySelector('#imageContainer').getElementsByTagName('img')
+  );
+  const selectors = Array.from(
+    document.querySelector('#selectorsDiv').getElementsByTagName('div')
+  );
 
-//   const selectedSel = e.currentTarget;
-//   const otherSels = selectors.filter((ele) => ele !== selectedSel);
+  const max = images.length - 1;
+  const current = parseInt(
+    Array.from(document.querySelectorAll('.imageSelector'))
+      .find((selector) => Array.from(selector.classList).includes('selected'))
+      .id.replace('selector', '')
+  );
 
-//   selectedSel.classList.add('selected');
-//   otherSels.forEach((ele) => ele.classList.remove('selected'));
+  let next = current + x;
+  next = next > max ? 0 : next;
+  next = next < 0 ? max : next;
 
-//   return;
-// }
-
-// function hideOtherImages(others) {
-//   others.forEach((image) => {
-//     image.classList.add('hidden');
-//     image.style.width = '0px';
-//   });
-// }
-
-// function showSelectedImage(image) {
-//   image.classList.remove('hidden');
-
-//   const natHeight = image.naturalHeight;
-//   const natWidth = image.naturalWidth;
-
-//   const maxWidth = Math.floor(
-//     Math.max(
-//       document.documentElement.clientWidth || 0,
-//       window.innerWidth || 0
-//     ) *
-//       0.8 *
-//       0.8
-//   );
-//   const maxHeight = Math.floor(
-//     Math.max(
-//       document.documentElement.clientHeight || 0,
-//       window.innerHeight || 0
-//     ) *
-//       0.8 *
-//       0.8
-//   );
-
-//   if (natHeight > maxHeight || natWidth > maxWidth) {
-//     if (natHeight > natWidth) {
-//       image.style.height = maxHeight + 'px';
-
-//       const percentage = maxHeight / natHeight;
-//       const setWidth = natWidth * percentage;
-
-//       image.style.width = setWidth + 'px';
-//     } else {
-//       image.style.width = maxWidth + 'px';
-
-//       const percentage = maxWidth / natWidth;
-//       const setHeight = natHeight * percentage;
-
-//       image.style.height = setHeight + 'px';
-//     }
-//   } else {
-//     image.style.width = natWidth + 'px';
-//     image.style.height = natHeight + 'px';
-//   }
-// }
-
-// function nextImage(x) {
-//   const images = imageManagement.images;
-//   const selectors = imageManagement.selectors;
-
-//   const max = images.length - 1;
-//   const current = parseInt(
-//     Array.from(document.querySelectorAll('.imageSelector'))
-//       .find((selector) => Array.from(selector.classList).includes('selected'))
-//       .id.replace('selector', '')
-//   );
-
-//   let next = current + x;
-//   next = next > max ? 0 : next;
-//   next = next < 0 ? max : next;
-
-//   const selectedIMG = images[next];
-//   const others = images.filter((image) => image !== selectedIMG);
-
-//   showSelectedImage(selectedIMG);
-//   hideOtherImages(others);
-
-//   selectors[next].classList.add('selected');
-
-//   const otherSels = selectors.filter((ele) => ele !== selectors[next]);
-//   otherSels.forEach((ele) => ele.classList.remove('selected'));
-// }
+  setImages(images[next]);
+}

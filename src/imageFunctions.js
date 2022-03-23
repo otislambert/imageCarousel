@@ -22,57 +22,21 @@ function addToCarousel(image) {
 }
 
 function sizeImage(image) {
-  const natHeight = image.naturalHeight;
-  const natWidth = image.naturalWidth;
-
-  const height = '';
-  const width = '';
-
-  const maxWidth = Math.floor(
-    Math.max(
-      document.documentElement.clientWidth || 0,
-      window.innerWidth || 0
-    ) *
-      0.8 *
-      0.8
-  );
-  const maxHeight = Math.floor(
-    Math.max(
-      document.documentElement.clientHeight || 0,
-      window.innerHeight || 0
-    ) *
-      0.8 *
-      0.8
-  );
-
-  if (natHeight > maxHeight || natWidth > maxWidth) {
-    if (natHeight > natWidth) {
-      image.style.height = maxHeight + 'px';
-
-      const percentage = maxHeight / natHeight;
-      const setWidth = natWidth * percentage;
-
-      width = setWidth;
-    } else {
-      image.style.width = maxWidth + 'px';
-
-      const percentage = maxWidth / natWidth;
-      const setHeight = natHeight * percentage;
-
-      height = setHeight;
-    }
-  } else {
-    width = natWidth;
-    height = natHeight;
-  }
-
-  return { height, width };
-}
-
-function getImageHeight(image) {
-  return new Promise((reject, resolve) => {
+  return new Promise((resolve, reject) => {
     const natHeight = image.naturalHeight;
-    const height = '';
+    const natWidth = image.naturalWidth;
+
+    let height = 0;
+    let width = 0;
+
+    const maxWidth = Math.floor(
+      Math.max(
+        document.documentElement.clientWidth || 0,
+        window.innerWidth || 0
+      ) *
+        0.8 *
+        0.8
+    );
     const maxHeight = Math.floor(
       Math.max(
         document.documentElement.clientHeight || 0,
@@ -81,20 +45,34 @@ function getImageHeight(image) {
         0.8 *
         0.8
     );
-    if (natHeight > maxHeight) {
-      image.style.width = maxWidth + 'px';
 
-      const percentage = maxWidth / natWidth;
-      const setHeight = natHeight * percentage;
+    if (natHeight > maxHeight || natWidth > maxWidth) {
+      if (natHeight > natWidth) {
+        height = maxHeight;
 
-      height = setHeight;
+        const percentage = maxHeight / natHeight;
+        const setWidth = natWidth * percentage;
+
+        width = setWidth;
+      } else {
+        width = maxWidth;
+
+        const percentage = maxWidth / natWidth;
+        const setHeight = natHeight * percentage;
+
+        height = setHeight;
+      }
     } else {
+      width = natWidth;
       height = natHeight;
     }
 
-    if (height > 0) {
-      resolve(height);
+    if (height > 0 && width > 0) {
+      resolve({ height: height, width: width });
+    } else {
+      reject(new Error('failed to get proper height and width'));
     }
   });
 }
+
 export { loadImage, sizeImage, addToCarousel };
